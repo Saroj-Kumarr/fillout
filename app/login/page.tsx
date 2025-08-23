@@ -8,12 +8,14 @@ export default function SignInPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="flex border-b items-center justify-between p-5 py-[22px] px-8 bg-white">
-        <Image
-          src="/icons/logo.svg"
-          alt="Fillout Logo"
-          width={100}
-          height={40}
-        />
+        <Link href="/">
+          <Image
+            src="/icons/logo.svg"
+            alt="Fillout Logo"
+            width={100}
+            height={40}
+          />
+        </Link>
         <Link href="/sign-up" className="text-gray-600 hover:text-gray-800">
           Sign Up
         </Link>
