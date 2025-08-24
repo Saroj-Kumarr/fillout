@@ -20,7 +20,8 @@ function ReviewCard({
   partialStar,
 }: ReviewCardProps) {
   return (
-    <Card className="p-4 w-60 flex flex-col justify-center items-center bg-gray-50 border-gray-200">
+    // Card now has a max-width and is full-width on small screens
+    <Card className="p-4 w-full max-w-xs md:w-40  flex flex-col justify-center items-center bg-gray-50 border-gray-200">
       <div className="flex items-center gap-2">
         {logo}
         <span className="font-medium text-xs">{platform}</span>
@@ -47,26 +48,28 @@ function ReviewCard({
 
 export default function TrustTestimonials() {
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="md:py-16 bg-white">
+      <div className="container mx-auto md:px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Grid now stacks on mobile and becomes 2-col on large screens */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Text content */}
-            <div>
-              <h2 className="text-3xl font-bold mb-6 leading-tight">
+            {/* Text is now centered on mobile and left-aligned on desktop */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 leading-tight">
                 100,000+ organizations trust Fillout for secure data intake
               </h2>
-              <p className="text-lg leading-relaxed">
+              <p className="text-left md:text-lg px-2 md:px-0 leading-relaxed max-w-prose mx-auto lg:mx-0">
                 <span className="font-medium">
-                  {" "}
-                  Average rating of 4.8 out of 5{" "}
-                </span>
+                  Average rating of 4.8 out of 5
+                </span>{" "}
                 from hundreds of reviews across Trustpilot, G2 and Product Hunt.
               </p>
             </div>
 
             {/* Right side - Review cards */}
-            <div className="flex items-center  gap-8">
+            {/* Card container now wraps and centers items on mobile */}
+            <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-8">
               <ReviewCard
                 platform="Trustpilot"
                 logo={

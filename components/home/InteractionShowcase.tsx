@@ -75,24 +75,24 @@ const IntegrationsShowcase = () => {
   const [isBottomRowHovered, setIsBottomRowHovered] = useState(false);
 
   return (
-    <section className="py-20 bg-[#FBBF24] overflow-hidden">
+    <section className="py-16 md:py-20 bg-[#FBBF24] overflow-hidden">
       <div className="container mx-auto px-4 text-center mb-12">
-        <h2 className="text-5xl font-bold text-gray-900 mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           Integrate with all your apps
         </h2>
-        <p className="text-xl mb-8">
+        <p className="text-lg md:text-xl mb-8">
           Get more done with the tools you already use.
         </p>
         <a
           href="#"
-          className="inline-flex items-center  text-lg text-gray-900 font-semibold hover:underline"
+          className="inline-flex items-center text-lg text-gray-900 font-semibold hover:underline"
         >
           See all integrations →
         </a>
       </div>
 
       {/* Top row - scrolling left */}
-      <div className="relative mb-10">
+      <div className="relative mb-6 md:mb-10">
         <div
           className={`flex ${
             isTopRowHovered ? "animate-paused" : "animate-scroll-left"
@@ -101,22 +101,22 @@ const IntegrationsShowcase = () => {
           {[...topRowIntegrations, ...topRowIntegrations].map(
             (integration, index) => (
               <div
-                key={index}
-                className="flex-shrink-0 glass-3 rounded-2xl p-6 mx-3 w-72 h-40 shadow-lg hover:bg-white transition-colors duration-200"
+                key={`top-${index}`}
+                className="flex-shrink-0 bg-white/30 backdrop-blur-sm rounded-xl p-4 md:p-6 mx-2 md:mx-3 w-60 h-36 md:w-72 md:h-40 shadow-lg hover:bg-white transition-colors duration-200"
                 onMouseEnter={() => setIsTopRowHovered(true)}
                 onMouseLeave={() => setIsTopRowHovered(false)}
               >
-                <div className="flex items-center justify-between gap-3 mb-4">
+                <div className="flex items-center justify-center gap-3 mb-3 md:mb-4">
                   {integration.icons.map((icon, iconIndex) => (
                     <div
                       key={iconIndex}
-                      className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-xl"
+                      className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center text-xl"
                     >
                       {icon}
                     </div>
                   ))}
                 </div>
-                <h3 className="font-semibold text-black text-center mb-2">
+                <h3 className="font-semibold text-black text-center text-sm md:text-base">
                   {integration.title}
                 </h3>
               </div>
@@ -135,22 +135,22 @@ const IntegrationsShowcase = () => {
           {[...bottomRowIntegrations, ...bottomRowIntegrations].map(
             (integration, index) => (
               <div
-                key={index}
-                className="flex-shrink-0 glass-3 rounded-2xl p-6 mx-3   w-72 h-40 shadow-lg hover:bg-white transition-colors duration-200"
+                key={`bottom-${index}`}
+                className="flex-shrink-0 bg-white/30 backdrop-blur-sm rounded-xl p-4 md:p-6 mx-2 md:mx-3 w-60 h-36 md:w-72 md:h-40 shadow-lg hover:bg-white transition-colors duration-200"
                 onMouseEnter={() => setIsBottomRowHovered(true)}
                 onMouseLeave={() => setIsBottomRowHovered(false)}
               >
-                <div className="flex items-center justify-between gap-3 mb-4">
+                <div className="flex items-center justify-center gap-3 mb-3 md:mb-4">
                   {integration.icons.map((icon, iconIndex) => (
                     <div
                       key={iconIndex}
-                      className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-xl"
+                      className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center text-xl"
                     >
                       {icon}
                     </div>
                   ))}
                 </div>
-                <h3 className="font-semibold text-black text-center mb-2">
+                <h3 className="font-semibold text-black text-center text-sm md:text-base">
                   {integration.title}
                 </h3>
               </div>
@@ -179,14 +179,24 @@ const IntegrationsShowcase = () => {
         }
 
         .animate-scroll-left {
-          animation: scroll-left 30s linear infinite;
+          /* Faster animation for mobile, original speed for desktop */
+          animation: scroll-left 20s linear infinite;
         }
 
         .animate-scroll-right {
-          animation: scroll-right 30s linear infinite;
+          /* Faster animation for mobile, original speed for desktop */
+          animation: scroll-right 20s linear infinite;
         }
 
-        /* Added paused animation class to stop scrolling on hover */
+        @media (min-width: 768px) {
+          .animate-scroll-left {
+            animation-duration: 30s;
+          }
+          .animate-scroll-right {
+            animation-duration: 30s;
+          }
+        }
+
         .animate-paused {
           animation-play-state: paused;
         }

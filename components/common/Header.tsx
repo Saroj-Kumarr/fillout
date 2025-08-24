@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
@@ -318,41 +318,133 @@ const ResourcesDropdown: React.FC = () => (
   </div>
 );
 
-// Component: Dropdown Content
+// Component: Dropdown Content (For Desktop)
 const DropdownContent: React.FC<{ itemName: string }> = ({ itemName }) => {
-  const dropdownComponents = {
+  const dropdownComponents: { [key: string]: React.ReactNode } = {
     Products: <ProductsDropdown />,
     Templates: <TemplatesDropdown />,
     Integrations: <IntegrationsDropdown />,
     Resources: <ResourcesDropdown />,
   };
+  return <>{dropdownComponents[itemName] || null}</>;
+};
 
-  return (
-    dropdownComponents[itemName as keyof typeof dropdownComponents] || null
-  );
+// Component for Mobile Dropdown Content
+const MobileDropdownItem: React.FC<{ title: string }> = ({ title }) => (
+  <div className="px-5 py-2 text-gray-700 hover:bg-yellow-200 transition-colors duration-200 cursor-pointer">
+    {title}
+  </div>
+);
+
+const MobileDropdownContent: React.FC<{ itemName: string }> = ({
+  itemName,
+}) => {
+  const renderContent = () => {
+    switch (itemName) {
+      case "Products":
+        return (
+          <>
+            <div className="px-5 py-2 font-semibold text-gray-800">
+              Products
+            </div>
+            {productsItems.map((item, i) => (
+              <MobileDropdownItem key={`prod-${i}`} title={item.title} />
+            ))}
+            <div className="px-5 py-2 mt-2 font-semibold text-gray-800">
+              Features
+            </div>
+            {featuresItems.map((item, i) => (
+              <MobileDropdownItem key={`feat-${i}`} title={item.title} />
+            ))}
+          </>
+        );
+      case "Integrations":
+        return (
+          <>
+            {integrationItems.map((item, i) => (
+              <MobileDropdownItem key={`int-${i}`} title={item.name} />
+            ))}
+          </>
+        );
+      case "Resources":
+        return (
+          <>
+            {resourceItems.map((item, i) => (
+              <MobileDropdownItem key={`res-${i}`} title={item.title} />
+            ))}
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+  return <div className="flex flex-col w-full">{renderContent()}</div>;
 };
 
 // Main Header Component
 const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // --- CREATE REORDERED MENU FOR MOBILE ---
+  const reorderForMobile = (items: MenuItemType[]): MenuItemType[] => {
+    const reordered = [...items];
+    const templatesItem = reordered.find((item) => item.name === "Templates");
+
+    if (!templatesItem) return items; // Return original if Templates isn't found
+
+    const otherItems = reordered.filter((item) => item.name !== "Templates");
+    const resourcesIndex = otherItems.findIndex(
+      (item) => item.name === "Resources"
+    );
+
+    // Place it after Resources, or at the end if Resources isn't found
+    if (resourcesIndex > -1) {
+      otherItems.splice(resourcesIndex + 1, 0, templatesItem);
+    } else {
+      otherItems.push(templatesItem);
+    }
+
+    return otherItems;
+  };
+  const mobileMenuItems = reorderForMobile(menuItems);
 
   const handleDropdownClick = (itemName: string) => {
     setActiveDropdown(activeDropdown === itemName ? null : itemName);
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        headerRef.current &&
+        !headerRef.current.contains(event.target as Node)
+      ) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const getDropdownWidth = (itemName: string) => {
-    const widths = {
+    const widths: { [key: string]: number } = {
       Templates: 650,
       Integrations: 400,
       Products: 420,
       Resources: 220,
     };
-    return widths[itemName as keyof typeof widths] || 300;
+    return widths[itemName] || 300;
   };
 
   return (
-    <header className="glass bg-white rounded-2xl max-w-7xl mx-auto fixed top-5 left-0 right-0 z-50 shadow-md">
+    <header
+      ref={headerRef}
+      className="glass bg-white rounded-2xl max-w-7xl mx-auto fixed top-5 left-0 right-0 z-50 shadow-md"
+    >
       <div className="max-w-7xl mx-auto px-3">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -365,14 +457,16 @@ const Header: React.FC = () => {
             />
           </div>
 
-          {/* Desktop Navigation */}
+          {/* --- DESKTOP NAVIGATION (UNCHANGED) --- */}
           <nav className="hidden md:flex items-center space-x-8 relative">
             {menuItems.map((item, index) => (
               <div key={index} className="relative group">
                 <button
                   className="flex items-center text-gray-800 hover:text-gray-600 font-medium transition-colors duration-300"
                   onClick={() =>
-                    item.hasDropdown && handleDropdownClick(item.name)
+                    item.hasDropdown
+                      ? handleDropdownClick(item.name)
+                      : (window.location.href = `/${item.name.toLowerCase()}`)
                   }
                 >
                   {item.name}
@@ -422,32 +516,53 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* --- MOBILE MENU (WITH REORDERED ITEMS) --- */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-yellow-100 bg-yellow-50">
-            <div className="py-4 space-y-3">
-              {menuItems.map((item, index) => (
-                <button
-                  key={index}
-                  className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-yellow-100 transition-colors duration-200"
-                  onClick={() =>
-                    item.hasDropdown && handleDropdownClick(item.name)
-                  }
-                >
-                  {item.name}
-                  {item.hasDropdown && (
-                    <ChevronDown
-                      className={`ml-1 w-4 h-4 transition-transform duration-200 ${
-                        activeDropdown === item.name ? "rotate-180" : "rotate-0"
-                      }`}
-                    />
-                  )}
-                </button>
+          <div className="md:hidden glass-2">
+            <div className="py-4 space-y-1">
+              {mobileMenuItems.map((item, index) => (
+                <React.Fragment key={index}>
+                  <button
+                    className="flex items-center justify-between w-full text-left px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-yellow-100 transition-colors duration-200 font-medium"
+                    onClick={() => {
+                      if (item.name === "Templates") {
+                        console.log("Navigate to Templates page");
+                        setIsMobileMenuOpen(false);
+                      } else if (item.hasDropdown) {
+                        handleDropdownClick(item.name);
+                      } else {
+                        setIsMobileMenuOpen(false);
+                      }
+                    }}
+                  >
+                    {item.name}
+                    {item.hasDropdown && item.name !== "Templates" && (
+                      <ChevronDown
+                        className={`ml-1 w-4 h-4 transition-transform duration-200 ${
+                          activeDropdown === item.name
+                            ? "rotate-180"
+                            : "rotate-0"
+                        }`}
+                      />
+                    )}
+                  </button>
+                  {item.hasDropdown &&
+                    item.name !== "Templates" &&
+                    activeDropdown === item.name && (
+                      <div className="glass-2">
+                        <MobileDropdownContent itemName={item.name} />
+                      </div>
+                    )}
+                </React.Fragment>
               ))}
 
-              <div className="border-t border-yellow-200 pt-4 px-4 space-y-3">
-                <Button variant="outline">Log in</Button>
-                <Button className="h-11 w-32">Get started</Button>
+              <div className="border-t border-yellow-200 pt-4 px-4 space-y-3 flex flex-col items-start">
+                <Button variant="outline">
+                  <Link href="/login">Log in</Link>
+                </Button>
+                <Button className="h-11 w-32">
+                  <Link href="/sign-up">Get started</Link>
+                </Button>
               </div>
             </div>
           </div>

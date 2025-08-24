@@ -15,6 +15,10 @@
   @apply bg-white/50 backdrop-blur-sm border border-white/10 shadow-sm;
 }
 
+.glass-4 {
+  @apply bg-black/30 backdrop-blur-sm border border-white/10 shadow-sm;
+}
+
 .radial-design {
   width: 100vw;
   height: 100vh;

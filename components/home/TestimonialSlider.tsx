@@ -1,84 +1,10 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight, MoveLeft, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-
-interface Testimonial {
-  id: number;
-  quote: string;
-  name: string;
-  title: string;
-  company: string;
-  avatar: string;
-  logo: string;
-}
-
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    quote:
-      "We've tried many form builders over the years. Fillout is in a league of its own. It's more robust, more flexible and saves our county time and money.",
-    name: "Ravi K. Udeshi",
-    title: "Election Manager",
-    company: "Fairfax County",
-    avatar: "/professional-man-glasses.png",
-    logo: "/government-seal-badge.png",
-  },
-  {
-    id: 2,
-    quote:
-      "Fillout has made data intake incredibly simple for our teams. Every form matches our brand and we save time with custom workflows and logic. It's the best form tool, hands down.",
-    name: "Michael Villanave",
-    title: "Head of Internal Communication and Events",
-    company: "Domino's Pizza",
-    avatar: "/professional-man-smiling.png",
-    logo: "/dominos-pizza-logo-red-blue.png",
-  },
-  {
-    id: 3,
-    quote:
-      "Fillout has been a game changer for the Bombas Giving Program. Even our external partners comment on how seamless the experience is.",
-    name: "Melina Morris",
-    title: "Sr Giving Relationships Manager",
-    company: "Bombas",
-    avatar: "/professional-woman-dark-hair.png",
-    logo: "/bombas-socks-logo-colorful.png",
-  },
-  {
-    id: 4,
-    quote:
-      "The automation features in Fillout have transformed our workflow. What used to take hours now happens automatically, and our team can focus on what really matters.",
-    name: "Sarah Chen",
-    title: "Operations Director",
-    company: "TechFlow Solutions",
-    avatar: "/professional-asian-woman.png",
-    logo: "/modern-blue-tech-logo.png",
-  },
-  {
-    id: 5,
-    quote:
-      "Integration with our existing tools was seamless. Fillout's API documentation is excellent and their support team is incredibly responsive.",
-    name: "James Rodriguez",
-    title: "Lead Developer",
-    company: "InnovateLab",
-    avatar: "/professional-hispanic-man-beard.png",
-    logo: "/placeholder-rc5oh.png",
-  },
-  {
-    id: 6,
-    quote:
-      "Our conversion rates improved by 40% after switching to Fillout. The user experience is so much smoother than our previous solution.",
-    name: "Emily Watson",
-    title: "Marketing Manager",
-    company: "GrowthCorp",
-    avatar: "/professional-blonde-woman.png",
-    logo: "/growth-logo-green-arrow.png",
-  },
-];
+import { testimonials } from "@/constants/testimonial";
 
 export default function TestimonialSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,7 +15,27 @@ export default function TestimonialSlider() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
-  const itemsPerView = 3;
+  // State for items per view, to be updated based on window size
+  const [itemsPerView, setItemsPerView] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerView(2);
+      } else {
+        setItemsPerView(3);
+      }
+    };
+
+    // Set initial value
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const maxIndex = Math.max(0, testimonials.length - itemsPerView);
 
   // Auto-play functionality
@@ -131,7 +77,7 @@ export default function TestimonialSlider() {
   const handleMouseUp = () => {
     if (!isDragging) return;
 
-    const threshold = 100;
+    const threshold = 50; // Smaller threshold for better responsiveness
     if (Math.abs(dragOffset) > threshold) {
       if (dragOffset > 0) {
         goToPrev();
@@ -161,7 +107,7 @@ export default function TestimonialSlider() {
   const handleTouchEnd = () => {
     if (!isDragging) return;
 
-    const threshold = 100;
+    const threshold = 50;
     if (Math.abs(dragOffset) > threshold) {
       if (dragOffset > 0) {
         goToPrev();
@@ -176,7 +122,7 @@ export default function TestimonialSlider() {
   };
 
   return (
-    <section className="py-16 px-4 bg-gray-50 relative overflow-hidden">
+    <section className="py-20 md:py-16 px-4 bg-gray-50 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <svg
@@ -201,11 +147,11 @@ export default function TestimonialSlider() {
 
       <div className="max-w-7xl mx-auto relative">
         {/* Header */}
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl font-medium text-gray-900">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-8 md:mb-12 gap-6">
+          <h2 className="text-2xl md:text-3xl font-medium text-gray-900 text-center md:text-left">
             How people use <span className="font-semibold">Fillout</span>
           </h2>
-          <div className="flex gap-5">
+          <div className="flex gap-4">
             <Button
               variant="outline"
               size="icon"
@@ -213,9 +159,9 @@ export default function TestimonialSlider() {
               className="rounded-md w-12 h-12 border-gray-300 bg-gray-100 hover:bg-gray-200"
             >
               <svg
-                className="undefined rotate-180"
-                width="50"
-                height="32"
+                className="rotate-180"
+                width="20"
+                height="20"
                 viewBox="0 0 25 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -233,8 +179,8 @@ export default function TestimonialSlider() {
               className="rounded-md w-12 h-12 border-gray-300 bg-gray-100 hover:bg-gray-200"
             >
               <svg
-                width="50"
-                height="32"
+                width="20"
+                height="20"
                 viewBox="0 0 25 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -269,28 +215,25 @@ export default function TestimonialSlider() {
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className="flex-shrink-0 w-full md:w-1/3 px-3 py-5"
+                className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2 py-5"
               >
-                <Card className="px-3 select-none relative py-6 h-[260px] bg-white border-0 shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <div className="flex flex-col h-full">
-                    {/* Company Logo */}
-                    <div className="flex justify-between">
-                      <blockquote className="text-gray-900 text-sm leading-relaxed mb-8 flex-grow">
+                <Card className="p-6 select-none relative h-[300px] bg-white border-0 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <div className="flex flex-col h-full justify-between">
+                    {/* Quote and Logo */}
+                    <div className="flex-grow">
+                      <blockquote className="text-gray-800 text-base leading-relaxed mb-4">
                         {testimonial.quote}
                       </blockquote>
-                      <div className="flex w-60 justify-end mb-6">
-                        <img
-                          src={testimonial.logo || "/placeholder.svg"}
-                          alt={`${testimonial.company} logo`}
-                          className="w-12 h-12 object-contain"
-                        />
-                      </div>
-
-                      {/* Quote */}
                     </div>
-
+                    <div className="flex justify-end w-full">
+                      <img
+                        src={testimonial.logo || "/placeholder.svg"}
+                        alt={`${testimonial.company} logo`}
+                        className="w-12 h-12 object-contain"
+                      />
+                    </div>
                     {/* Author */}
-                    <div className="flex items-center absolute bottom-8 left-5 gap-4">
+                    <div className="flex items-center gap-4 mt-auto pt-4 border-t border-gray-100">
                       <img
                         src={testimonial.avatar || "/placeholder.svg"}
                         alt={testimonial.name}

@@ -6,8 +6,8 @@ import Image from "next/image";
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="flex border-b items-center justify-between p-5 py-[22px] px-8 bg-white">
+    <div className="min-h-screen flex flex-col bg-[#F8F8F8]">
+      <header className="flex border-b items-center justify-between p-4 md:p-5 md:py-[22px] md:px-8 bg-white">
         <Link href="/">
           <Image
             src="/icons/logo.svg"
@@ -16,26 +16,28 @@ export default function SignUpPage() {
             height={40}
           />
         </Link>
-        <Link href="/login" className="text-gray-600 hover:text-gray-800">
+        <Link
+          href="/login"
+          className="text-gray-600 hover:text-gray-800 font-medium"
+        >
           Login
         </Link>
       </header>
 
-      <div className="flex-1 flex">
+      <div className="flex-1 flex flex-col lg:flex-row">
         {/* Left side - Sign up form */}
-        <div className="flex-1 flex flex-col bg-[#F8F8F8]">
-          {/* Main content */}
-          <div className="flex-1 flex items-center justify-center px-6">
-            <div className="w-full max-w-sm ">
+        <div className="flex-1 flex flex-col bg-[#F8F8F8] py-12 px-4 sm:px-6 lg:px-0">
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-full max-w-sm">
               <h2 className="text-2xl text-center font-medium text-gray-900 mb-8">
                 Create your account
               </h2>
 
-              <div className="space-y-3 bg-white p-6 rounded-xl cs">
+              <div className="space-y-4 bg-white p-6 rounded-xl shadow-sm">
                 {/* Google Sign Up */}
                 <Button
                   variant="outline"
-                  className="w-full h-11 justify-start gap-3 border border-gray-300 hover:bg-gray-50 bg-white relative"
+                  className="w-full h-11 justify-start gap-3 border border-gray-300 hover:bg-gray-50 bg-white relative text-sm sm:text-base"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path
@@ -64,7 +66,7 @@ export default function SignUpPage() {
                 {/* Microsoft Sign Up */}
                 <Button
                   variant="outline"
-                  className="w-full h-11 justify-start gap-3 border border-gray-300 hover:bg-gray-50 bg-white"
+                  className="w-full h-11 justify-start gap-3 border border-gray-300 hover:bg-gray-50 bg-white text-sm sm:text-base"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="#F25022" d="M1 1h10v10H1z" />
@@ -76,7 +78,7 @@ export default function SignUpPage() {
                 </Button>
 
                 {/* Divider */}
-                <div className="relative my-6">
+                <div className="relative py-2">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-gray-300" />
                   </div>
@@ -98,7 +100,7 @@ export default function SignUpPage() {
                 </div>
 
                 {/* Continue button */}
-                <Button variant="secondary" className="w-full h-11 mt-3">
+                <Button variant="secondary" className="w-full h-11">
                   Continue with email
                 </Button>
               </div>
@@ -121,25 +123,18 @@ export default function SignUpPage() {
               </div>
             </div>
           </div>
-
-          {/* Footer */}
         </div>
 
         {/* Right side - Marketing content */}
-        <div className="flex-1 bg-[#FADF9A] relative overflow-hidden">
+        <div className="hidden lg:flex flex-1 bg-[#FADF9A] relative overflow-hidden">
           <div className="relative h-full flex flex-col items-center justify-center p-12">
-            {/* Main heading */}
             <h1 className="text-7xl font-bold text-black mb-20 text-center leading-tight">
               Make a Fillout
             </h1>
-
-            {/* Stats */}
             <p className="text-gray-800 mb-12 text-center text-lg">
               100,000+ organizations build with Fillout
             </p>
-
-            {/* Company logos */}
-            <div className="flex items-center justify-center gap-8 opacity-60">
+            <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
               <div className="text-gray-600 font-bold text-lg">HACK CLUB</div>
               <div className="text-gray-600 font-serif text-xl">Berkeley</div>
               <div className="text-gray-600 font-bold text-lg">

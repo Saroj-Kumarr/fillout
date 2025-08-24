@@ -1,151 +1,29 @@
 import { Button } from "@/components/ui/button";
+import {
+  aiToolsLinks,
+  navigationSections,
+  resourcesLinks,
+  socialLinks,
+} from "@/constants/footer";
 import Image from "next/image";
 import Link from "next/link";
-import { Linkedin } from "lucide-react";
-
-const navigationSections = [
-  {
-    title: "GENERAL",
-    links: [
-      { label: "Home", href: "/" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "Integrations", href: "/integrations" },
-      { label: "Careers", href: "/careers" },
-      { label: "Report abuse", href: "/report-abuse" },
-      { label: "What's new", href: "/whats-new" },
-      { label: "Blog", href: "/blog" },
-      { label: "Enterprise", href: "/enterprise" },
-    ],
-  },
-  {
-    title: "PRODUCT",
-    links: [
-      { label: "Forms", href: "/forms" },
-      { label: "Scheduling", href: "/scheduling" },
-      { label: "PDF generation", href: "/pdf-generation" },
-      { label: "Payments", href: "/payments" },
-      { label: "Workflows", href: "/workflows" },
-      { label: "Conversion kit", href: "/conversion-kit" },
-      { label: "Zite", href: "/zite" },
-    ],
-  },
-];
-
-const aiToolsLinks = [
-  { label: "AI Quiz Maker", href: "/ai-quiz-maker" },
-  { label: "AI Form Builder", href: "/ai-form-builder" },
-  { label: "AI Survey Maker", href: "/ai-survey-maker" },
-  { label: "Import Google Form", href: "/import-google-form" },
-  { label: "AI Signature Maker", href: "/ai-signature-maker" },
-  { label: "Survey questions", href: "/survey-questions" },
-  { label: "PDF to Form", href: "/pdf-to-form" },
-];
-
-const resourcesLinks = [
-  { label: "Help Center", href: "/help-center" },
-  { label: "About Fillout", href: "/about" },
-  { label: "Status", href: "/status" },
-  { label: "Form builder comparison", href: "/form-builder-comparison" },
-  { label: "Fillout vs Jotform", href: "/fillout-vs-jotform" },
-  { label: "vs Typeform", href: "/vs-typeform" },
-  { label: "vs Google Forms", href: "/vs-google-forms" },
-  { label: "vs SurveyMonkey", href: "/vs-surveymonkey" },
-  { label: "vs Formstack", href: "/vs-formstack" },
-  { label: "vs FormAssembly", href: "/vs-formassembly" },
-];
-
-const socialLinks = [
-  {
-    href: "https://linkedin.com",
-    icon: (
-      <svg
-        className="max-w-[31px] w-full h-[31px]"
-        viewBox="0 0 31 31"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g clip-path="url(#clip0_240_1196)">
-          <path
-            d="M24.083 0.317383H6.58301C3.13176 0.317383 0.333008 3.11613 0.333008 6.56738V24.0674C0.333008 27.5186 3.13176 30.3174 6.58301 30.3174H24.083C27.5355 30.3174 30.333 27.5186 30.333 24.0674V6.56738C30.333 3.11613 27.5355 0.317383 24.083 0.317383ZM10.333 24.0674H6.58301V10.3174H10.333V24.0674ZM8.45801 8.73238C7.25051 8.73238 6.27051 7.74488 6.27051 6.52738C6.27051 5.30988 7.25051 4.32238 8.45801 4.32238C9.66551 4.32238 10.6455 5.30988 10.6455 6.52738C10.6455 7.74488 9.66676 8.73238 8.45801 8.73238ZM25.333 24.0674H21.583V17.0624C21.583 12.8524 16.583 13.1711 16.583 17.0624V24.0674H12.833V10.3174H16.583V12.5236C18.328 9.29113 25.333 9.05238 25.333 15.6186V24.0674Z"
-            fill="white"
-          ></path>
-        </g>
-        <defs>
-          <clipPath id="clip0_240_1196">
-            <rect
-              width="30"
-              height="30"
-              fill="white"
-              transform="translate(0.333008 0.317383)"
-            ></rect>
-          </clipPath>
-        </defs>
-      </svg>
-    ),
-    label: "LinkedIn",
-  },
-  {
-    href: "https://twitter.com",
-    icon: (
-      <svg
-        className="max-w-[34px] w-full h-[31px]"
-        viewBox="0 0 34 31"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M26.8794 0.317383H32.0296L20.7214 13.048L33.933 30.3174H23.5653L15.448 19.8229L6.15507 30.3174H1.00478L12.9848 16.7011L0.333008 0.317383H10.9583L18.2918 9.9041L26.8794 0.317383ZM25.0768 27.3285H27.9318L9.45796 3.19561H6.39019L25.0768 27.3285Z"
-          fill="white"
-        ></path>
-      </svg>
-    ),
-    label: "Twitter",
-  },
-  {
-    href: "#",
-    icon: (
-      <svg
-        className="max-w-[38px] w-full h-[35px]"
-        viewBox="0 0 38 35"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M26.759 2.39413C23.9319 0.850684 20.738 0.147727 17.5289 0.346388C14.3197 0.560332 11.2328 1.67589 8.63495 3.57082C5.99122 5.48103 3.95875 8.10948 2.78207 11.1505C2.1708 12.7245 1.78876 14.375 1.6665 16.0559H5.88425C6.1746 12.9232 7.61107 10.0044 9.91861 7.86497C12.2261 5.72554 15.2366 4.50301 18.3847 4.45716C21.6091 4.39603 24.7418 5.55744 27.1563 7.71215C29.5556 9.86687 31.0684 12.8468 31.3741 16.0559H35.5765C35.3015 11.4562 32.7189 5.66441 26.759 2.39413ZM19.8211 13.1219C19.5461 13.4581 19.1793 13.6873 18.7514 13.8095C18.3388 13.9318 17.8956 13.9165 17.483 13.7637C17.1774 13.6873 16.9023 13.5345 16.6731 13.3052C16.4439 13.0913 16.2758 12.8162 16.1841 12.5259C16.0924 12.2355 16.0771 11.9146 16.1382 11.609C16.1994 11.3033 16.3369 11.013 16.5356 10.7838C16.9023 10.3864 17.4066 10.1267 17.9568 10.0808C18.5069 10.035 19.0418 10.1878 19.4697 10.524C19.6072 10.631 19.7294 10.7532 19.8517 10.8755C20.0045 10.7685 20.1573 10.6462 20.3407 10.524C20.142 10.2336 19.8823 9.98912 19.5766 9.82103C19.0112 9.51539 18.3694 9.39314 17.7275 9.48483C17.3913 9.51539 17.0551 9.62236 16.7495 9.77518C16.4439 9.94328 16.1841 10.1572 15.9701 10.417C15.7562 10.6768 15.6034 10.9672 15.5117 11.2881C15.42 11.609 15.4047 11.9452 15.4506 12.2661C15.4964 12.6787 15.6492 13.0913 15.8937 13.4275C16.1382 13.7637 16.4744 14.0388 16.8565 14.2069C17.3149 14.4208 17.8345 14.4972 18.3388 14.4514C18.9501 14.4361 19.5461 14.1916 20.0198 13.7943C20.142 13.6873 20.2337 13.565 20.356 13.4581L19.8364 13.0913C19.8364 13.0913 19.8364 13.1066 19.8211 13.1219ZM23.6874 14.375H24.4209L25.185 12.8468H27.2175L27.9968 14.375H28.7151C27.8746 12.6787 27.0494 10.9977 26.2089 9.31673C25.3684 10.9977 24.5279 12.6787 23.6874 14.375ZM25.5059 12.2202C25.7351 11.7465 25.9796 11.2881 26.2089 10.8143C26.4534 11.2881 26.6826 11.7618 26.9118 12.2202H25.5059ZM8.5891 14.375H9.32262C9.58241 13.8707 9.8422 13.3511 10.0867 12.8468H12.1192C12.379 13.3511 12.6387 13.8707 12.8985 14.375H13.6168L11.1106 9.30145C10.2701 10.9977 9.42959 12.6787 8.5891 14.375ZM10.3923 12.2202C10.6216 11.7465 10.8661 11.2881 11.1106 10.7991C11.3551 11.2881 11.5843 11.7465 11.8135 12.2202H10.3923ZM24.2834 11.5784C24.3904 11.4103 24.4668 11.2117 24.482 11.013C24.4973 10.8143 24.4668 10.6004 24.3904 10.417C24.3139 10.2336 24.1917 10.0655 24.0389 9.928C23.8861 9.79046 23.7027 9.69877 23.504 9.65293C23.2748 9.5918 23.0303 9.56124 22.7858 9.57652C22.2968 9.56124 21.8077 9.57652 21.3035 9.57652C21.2729 9.57652 21.2423 9.57652 21.227 9.57652V14.375H21.8689V12.2202C22.037 12.2202 22.1898 12.2202 22.3426 12.2202C22.6482 12.205 22.9692 12.205 23.2748 12.1744C23.4734 12.1591 23.6721 12.098 23.8555 12.0063C24.0236 11.8841 24.1764 11.7465 24.2834 11.5784ZM23.7638 11.12C23.718 11.2575 23.6263 11.3645 23.504 11.4409C23.3818 11.5173 23.2442 11.5631 23.1067 11.5631C22.7094 11.5784 22.2968 11.5631 21.8842 11.5631V10.1572C22.312 10.1725 22.7246 10.1725 23.1373 10.1878C23.2442 10.1878 23.3512 10.2184 23.4429 10.2642C23.5346 10.31 23.6263 10.3864 23.6874 10.4781C23.7485 10.5698 23.7791 10.6768 23.7944 10.7838C23.8096 10.906 23.7944 11.0283 23.7638 11.12ZM13.9988 14.3597H14.6559V9.56124H13.9988V14.3597Z"
-          fill="white"
-        ></path>
-        <path
-          d="M18.871 30.0233C16.1509 30.0997 13.4613 29.2745 11.2607 27.6852C8.3572 25.6069 6.61509 22.7951 5.98854 19.2803H1.74023C2.62657 27.6546 10.0993 34.8829 19.6962 34.2869C28.5443 33.752 34.7945 26.6613 35.5127 19.2803H31.2644C30.7907 22.2449 29.2778 24.9345 27.0161 26.8905C24.7544 28.8619 21.8662 29.9622 18.871 30.0233ZM17.2664 25.3318C17.6026 25.4694 17.9694 25.5458 18.3361 25.5305C18.7029 25.5305 19.0697 25.4388 19.4058 25.286C19.7115 25.1637 19.9866 24.9498 20.2158 24.7053C20.4297 24.4455 20.5978 24.1398 20.6742 23.8189C20.8118 23.2994 20.8118 22.7645 20.6437 22.2449C20.5673 21.9698 20.4297 21.7101 20.2463 21.4808C20.063 21.2516 19.8337 21.0682 19.5739 20.946C19.1919 20.7473 18.764 20.6556 18.3361 20.6709C18.2444 20.6709 18.1528 20.6709 18.0611 20.6709C17.9999 20.6709 17.9541 20.6862 17.893 20.6862C17.5415 20.7168 17.19 20.8543 16.8844 21.0529C16.5787 21.2516 16.3342 21.5267 16.1661 21.8323C15.9216 22.2755 15.8299 22.7798 15.8605 23.2688C15.9216 24.2315 16.3648 24.9498 17.2664 25.3318ZM17.679 21.5267C17.9847 21.4044 18.3361 21.3739 18.657 21.435C18.978 21.5114 19.2836 21.6795 19.4975 21.9393C19.7726 22.306 19.9101 22.7492 19.8796 23.2077C19.849 23.6661 19.6504 24.094 19.3142 24.4149C18.5959 25.0567 17.083 24.9192 16.7621 23.5439C16.7316 23.4063 16.7163 23.2688 16.7163 23.2077C16.6857 22.4283 17.0525 21.7865 17.679 21.5267ZM13.6599 24.7664C13.4766 24.7664 13.2779 24.7358 13.1098 24.6441C12.9417 24.5525 12.8042 24.4302 12.6972 24.2774C12.4985 24.4913 12.2999 24.7053 12.1012 24.9192C12.254 25.1026 12.4527 25.2401 12.6666 25.3318C13.0945 25.5152 13.553 25.561 14.0114 25.4846C14.7602 25.3624 15.2492 24.8734 15.2951 24.1551C15.3256 23.9106 15.2798 23.6508 15.1575 23.4369C15.0353 23.2229 14.8519 23.0396 14.6227 22.9326C14.424 22.8409 14.2101 22.7645 14.0114 22.6881C13.7822 22.6117 13.553 22.5047 13.3237 22.3977C13.2168 22.3366 13.1404 22.2449 13.1098 22.1379C13.0792 22.031 13.0792 21.9087 13.1251 21.8017C13.1556 21.7253 13.2015 21.6489 13.2626 21.5878C13.3237 21.5267 13.4002 21.4961 13.4766 21.4656C13.6752 21.3891 13.9044 21.3739 14.1184 21.435C14.3323 21.4961 14.5157 21.6031 14.6532 21.7712C14.8519 21.5572 15.0506 21.3586 15.2492 21.1446C15.2034 21.0988 15.1728 21.0682 15.127 21.0529C14.7602 20.7932 14.317 20.6556 13.8739 20.6709C13.4918 20.6709 13.1098 20.7779 12.7736 20.9765C12.0248 21.435 11.9484 22.7645 12.8959 23.1924C13.1251 23.2994 13.3696 23.3605 13.5988 23.4522C13.7975 23.5286 13.9961 23.6203 14.1795 23.7272C14.2406 23.7731 14.3018 23.8342 14.3323 23.9106C14.3782 23.987 14.3935 24.0634 14.3935 24.1398C14.3935 24.2163 14.3782 24.3079 14.3476 24.3844C14.3171 24.4608 14.2559 24.5219 14.1948 24.583C14.0878 24.7053 13.8739 24.7664 13.6599 24.7664ZM21.8662 24.797C22.6303 25.5458 23.5319 25.6833 24.5252 25.3777C24.892 25.2554 25.1976 25.0109 25.4115 24.7053L24.7239 24.2163C24.6933 24.2468 24.678 24.2621 24.6627 24.2927C23.9904 25.1026 22.9206 24.797 22.4775 24.2315C22.3246 24.0329 22.2177 23.8036 22.1565 23.5439C22.0954 23.2994 22.0801 23.0396 22.126 22.7798C22.1718 22.3977 22.3552 22.0463 22.6456 21.7865C23.104 21.3739 24.0209 21.1752 24.6169 21.8323C24.6322 21.8476 24.6475 21.8629 24.6627 21.8629L25.3046 21.3891C25.1365 21.1752 24.9225 21.0071 24.678 20.8848C24.2349 20.6709 23.7306 20.6098 23.2568 20.6862C22.9512 20.7168 22.6608 20.8237 22.4011 20.9765C22.1413 21.1294 21.912 21.328 21.7287 21.5725C21.3772 22.0615 21.2091 22.6575 21.2549 23.2535C21.2396 23.8342 21.4689 24.3844 21.8662 24.797Z"
-          fill="white"
-        ></path>
-        <path
-          d="M37.3331 19.0663V16.2698H0V19.0663H37.3331Z"
-          fill="white"
-        ></path>
-      </svg>
-    ),
-    label: "Other",
-  },
-];
 
 export function Footer() {
   return (
     <div className="relative pt-20 bg-[#F9FAFB]">
       {/* CTA Section */}
-      <div className="absolute  w-full max-w-6xl -top-8 left-1/2 -translate-x-1/2 px-4">
-        <div className="bg-white glass-3 rounded-full px-10 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div className="absolute w-full max-w-6xl -top-16 lg:-top-8 left-1/2 -translate-x-1/2 px-4">
+        <div className="bg-white/50 border backdrop-blur-md rounded-3xl lg:rounded-full px-6 py-8 lg:px-10 flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
           <div className="flex-1">
-            <h2 className="text-4xl leading-11 lg:text-5xl font-bold text-black">
-              Make your first form
-              <br />
-              in minutes.
+            <h2 className="text-3xl leading-snug lg:text-5xl font-bold text-black">
+              Make your first form in minutes.
             </h2>
           </div>
-          <div className="flex-1 text-center lg:text-left">
-            <p className="text-lg">
+          <div className="flex-1 w-full">
+            <p className="text-base lg:text-lg">
               Unlimited forms with 1000 submissions/month.
             </p>
-            <p className="text-lg mb-6">
+            <p className="text-base lg:text-lg mb-6">
               Unlimited team seats. See{" "}
               <Link href="/pricing" className="underline cursor-pointer">
                 pricing
@@ -153,7 +31,7 @@ export function Footer() {
               for details.
             </p>
             <Button
-              className="w-full bg-[#F2C14B] font-medium text-lg text-black h-13"
+              className="w-full bg-[#F2C14B] font-medium text-lg text-black h-14 lg:h-13 hover:bg-yellow-400"
               variant="secondary"
             >
               <span className="font-semibold text-xl">Get started</span> —
@@ -164,18 +42,24 @@ export function Footer() {
       </div>
 
       {/* Footer Section */}
-      <footer className="bg-[#211C20]  text-white pt-40">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-5">
+      <footer className="bg-[#211C20] text-white pt-48 lg:pt-40 px-4">
+        <div className="max-w-7xl mx-auto py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
             {/* Logo and Description */}
-            <div className="col-span-2">
-              <div className="mb-6 relative w-[410px] h-[130px]">
-                <Image src="/icons/logo_2.svg" alt="Fillout" fill />
+            <div className="col-span-1 md:col-span-2 text-center md:text-left">
+              <div className="mb-6 relative w-full h-[100px] lg:w-[410px] lg:h-[130px] flex justify-center lg:justify-start">
+                <Image
+                  src="/icons/logo_2.svg"
+                  alt="Fillout"
+                  width={250}
+                  height={80}
+                  className="object-contain"
+                />
               </div>
-              <p className="text-3xl text-gray-300 mb-8">
+              <p className="text-2xl lg:text-3xl text-gray-300 mb-8">
                 The all-in-one form solution
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-4 justify-center md:justify-start">
                 {socialLinks.map((social, index) => (
                   <Link
                     key={index}
@@ -183,6 +67,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
+                    className="hover:opacity-80 transition-opacity"
                   >
                     {social.icon}
                   </Link>
@@ -190,15 +75,16 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="col-span-3 grid grid-cols-1 justify-items-center justify-center md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {navigationSections.map((section, index) => (
-                <div key={index}>
-                  <h3 className=" font-semibold text-gray-400 uppercase tracking-wider mb-6">
+            {/* Links Sections */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
+              {navigationSections.map((section) => (
+                <div key={section.title}>
+                  <h3 className="font-semibold text-gray-400 uppercase tracking-wider mb-6">
                     {section.title}
                   </h3>
                   <ul className="space-y-4">
-                    {section.links.map((link, linkIndex) => (
-                      <li key={linkIndex}>
+                    {section.links.map((link) => (
+                      <li key={link.label}>
                         <Link
                           href={link.href}
                           className="text-gray-300 text-lg hover:text-white transition-colors"
@@ -210,15 +96,13 @@ export function Footer() {
                   </ul>
                 </div>
               ))}
-
-              {/* AI Tools Column */}
               <div>
-                <h3 className=" font-semibold text-gray-400 uppercase tracking-wider mb-6">
+                <h3 className="font-semibold text-gray-400 uppercase tracking-wider mb-6">
                   AI TOOLS
                 </h3>
                 <ul className="space-y-4">
-                  {aiToolsLinks.map((link, index) => (
-                    <li key={index}>
+                  {aiToolsLinks.map((link) => (
+                    <li key={link.label}>
                       <Link
                         href={link.href}
                         className="text-gray-300 text-lg hover:text-white transition-colors"
@@ -229,15 +113,13 @@ export function Footer() {
                   ))}
                 </ul>
               </div>
-
-              {/* Resources Column */}
               <div>
                 <h3 className="font-semibold text-gray-400 uppercase tracking-wider mb-6">
                   RESOURCES
                 </h3>
                 <ul className="space-y-4">
-                  {resourcesLinks.map((link, index) => (
-                    <li key={index}>
+                  {resourcesLinks.map((link) => (
+                    <li key={link.label}>
                       <Link
                         href={link.href}
                         className="text-gray-300 text-lg hover:text-white transition-colors"
@@ -251,23 +133,23 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t mt-12 py-8">
-          <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="flex flex-wrap gap-4">
-              <div className=" rounded-full px-4 py-1 text-sm text-gray-300 border ">
+        <div className="border-t border-gray-700 mt-12 py-8">
+          <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-6 px-4">
+            <div className="flex flex-wrap justify-center gap-4">
+              <div className="rounded-full px-4 py-1 text-sm text-gray-300 border border-gray-600">
                 <span className="font-medium">SOC II Type 2</span>{" "}
-                <span className="text-gray-200">Compliant</span>
+                <span className="text-gray-400">Compliant</span>
               </div>
-              <div className=" rounded-full px-4 py-1 text-sm text-gray-300 border">
+              <div className="rounded-full px-4 py-1 text-sm text-gray-300 border border-gray-600">
                 <span className="font-medium">256-bit AES</span>{" "}
-                <span className="text-gray-200">Data encryption</span>
+                <span className="text-gray-400">Data encryption</span>
               </div>
-              <div className=" rounded-full px-4 py-1 text-sm text-gray-300 border">
+              <div className="rounded-full px-4 py-1 text-sm text-gray-300 border border-gray-600">
                 <span className="font-medium">24/5 Tech support</span>{" "}
-                <span className="text-gray-200">Here if you need us</span>
+                <span className="text-gray-400">Here if you need us</span>
               </div>
             </div>
-            <div className="flex flex-wrap gap-6 text-sm text-[#F3BF26]">
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-[#F3BF26]">
               <Link
                 href="/press-kit"
                 className="hover:text-yellow-300 transition-colors"
@@ -286,9 +168,7 @@ export function Footer() {
               >
                 Terms
               </Link>
-              <span className="text-[#F3BF26] font-medium">
-                © 2025 Restly, Inc.
-              </span>
+              <span className="text-gray-400">© 2025 Restly, Inc.</span>
             </div>
           </div>
         </div>

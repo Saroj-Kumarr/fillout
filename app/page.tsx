@@ -11,7 +11,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="bg-[#F8F8F8]">
+    <div>
       <Header />
       <Hero />
       <MainTabs />
