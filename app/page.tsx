@@ -12,7 +12,6 @@ import React from "react";
 const page = () => {
   return (
     <div>
-      <Header />
       <Hero />
       <MainTabs />
       <TrustedBy />
@@ -20,7 +19,6 @@ const page = () => {
       <LastingImpression />
       <IntegrationsShowcase />
       <TestimonialSlider />
-      <Footer />
     </div>
   );
 };

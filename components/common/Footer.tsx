@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   aiToolsLinks,
@@ -7,8 +9,13 @@ import {
 } from "@/constants/footer";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === "/home") return null;
+
   return (
     <div className="relative pt-20 bg-[#F9FAFB]">
       {/* CTA Section */}
